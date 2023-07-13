@@ -15,7 +15,7 @@ class NarutoDB {
         // if(!addres.ok) {
         //     throw new Error(`Could not fetch: ${url} Code: ${addres.status}`)
         // }
-        console.log("DB RES", res.images)
+        // console.log("DB RES", res.images)
         return res;
     }
     getAllCharacters = async (page) => {
@@ -27,6 +27,11 @@ class NarutoDB {
     getCharacter = async (id) => {
         let character = await this.getResource(`character/${id}`)
         return this._transformCharacter(character, id)
+    }
+    getTotalCharacterCount = async () => {
+        let data = await this.getResource(`character/`)
+        data = data.totalCharacters
+        return data
     }
     _transformCharacter(char, id) {
         return {

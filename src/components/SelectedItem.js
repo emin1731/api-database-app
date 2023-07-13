@@ -66,6 +66,8 @@ class SelectedItem extends Component {
         const debut = this.state.debut
         const anime = debut ? debut.anime : 'none'
         const manga = debut ? debut.manga : 'none'
+        const birthdate = this.state.personal.birthdate ? this.state.personal.birthdate : 'unknown'
+        const status = this.state.personal.status ? this.state.personal.status : 'unknown'
         const img = this.state.img ? this.state.img.split('png')[0] + 'png' : NotFoundImg
         return (
             <Card style={{ width: '100%', marginTop: '50px' }} >
@@ -77,9 +79,10 @@ class SelectedItem extends Component {
                     bulk of the card's content.
                     </Card.Text>
                     <ListGroup className="list-group-flush">
+                        <ListGroup.Item>Birth date: {birthdate}</ListGroup.Item>
+                        <ListGroup.Item>Status: {status}</ListGroup.Item>
                         <ListGroup.Item>Anime: {anime}</ListGroup.Item>
                         <ListGroup.Item>Manga: {manga}</ListGroup.Item>
-                        <ListGroup.Item>{this.props.family}</ListGroup.Item>
                         <ListGroup.Item>{this.props.jutsu}</ListGroup.Item>
                     </ListGroup>
                     {/* <Button variant="primary">Go somewhere</Button> */}

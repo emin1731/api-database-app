@@ -9,15 +9,17 @@ class ItemTable extends Component {
 
         state = {
             itemList: null,
-            currentPage: null
+            currentPage: this.props.currentPage
+
     
         }
 
 
     componentDidMount() {
         const getData = this.props.data
+        const page = this.state.currentPage
         // this.NarutoDB.getAllCharacters(3)
-        getData(3)
+        getData(page)
             .then((itemList) => {
                 this.setState({
                     itemList
@@ -28,8 +30,6 @@ class ItemTable extends Component {
     renderItems(arr) {
         if(arr){
             return arr.map((item, id) => {
-                // console.log(item)
-
                  return (
                     <tr className="" key={id} onClick={() => this.props.onItemSelected(item.id)} style={{cursor: 'pointer'}}>
                         <td>{item.id}</td>

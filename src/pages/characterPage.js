@@ -48,7 +48,10 @@ class CharacterPage extends Component {
                 </Row>
                 <Row>
                     <Col lg='8'>
-                        <ItemTable data={this.NarutoDB.getAllCharacters} onItemSelected={(id) => this.onItemSelected(id)}/>
+                        <ItemTable 
+                            data={this.NarutoDB.getAllCharacters} 
+                            onItemSelected={(id) => this.onItemSelected(id)}
+                            currentPage={this.state.currentPage}/>
                         <PaginationBar />
                     </Col>
                     <Col lg='4'>
