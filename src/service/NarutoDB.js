@@ -6,16 +6,11 @@ class NarutoDB {
     }
     getResource = async (url) => {
         let res
-        const addres = await fetch(`${this._apiBase}${url}`)
+        await fetch(`${this._apiBase}${url}`)
         .then(response => response.json())
         .then(data => {
             res = data
         })
-        // const res = await addres.json();
-        // if(!addres.ok) {
-        //     throw new Error(`Could not fetch: ${url} Code: ${addres.status}`)
-        // }
-        // console.log("DB RES", res.images)
         return res;
     }
     getAllCharacters = async (page) => {
