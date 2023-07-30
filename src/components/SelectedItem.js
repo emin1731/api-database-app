@@ -1,17 +1,20 @@
 // import {Container, Row, Col} from 'react-bootstrap'
-import { Component } from 'react';
+import { Component, Fragment } from 'react';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
+import Carousel from 'react-bootstrap/Carousel';
+import Table from 'react-bootstrap/Table';
+
 
 import NotFoundImg from '../img/no-image.jpg'
 
 
 class SelectedItem extends Component {
-    // constructor(props) {
 
     state = {
         item: null,
         img: null,
+        img_arr: null,
         debut: null,
         personal: null,
 
@@ -20,7 +23,6 @@ class SelectedItem extends Component {
         if(this.props.itemId !== prevProps.itemId) {
             this.updateItem()
         }
-        console.log("SEL ITEM UPDATE", this.state.item)
     }
 
     updateItem() {
@@ -29,31 +31,83 @@ class SelectedItem extends Component {
         if(!itemId) {
             return
         }
-
-        // this.GOTservice.getCharacter(itemId)  
         getData(itemId)  
         .then(item => {
             this.setState({
                 item: item,
                 img: item.images[0],
+                img_arr: item.images,
                 debut: item.debut,
                 personal: item.personal
             })
-            // if(item.debut === undefined) {
-            //     this.setState({
-            //         debut: "none"
-            //     }) 
-            // } 
-            // else {
-            //     this.setState({
-            //         debut: item.debut
-            //     }) 
-            // }
-            // co
-            // console.log("CROPPED", item.images[0].split('png')[0] + 'png')
         })
+    }
+    createImg(img) {
+        if(!img.length) {
+            return <Card.Img variant="top" src= {NotFoundImg} />
+        }
+        else if(img.length === 1) {
+             return <Card.Img variant="top" src= {img[0]} />
+        }
+        else {
+            return(
+                <Carousel slide={false}>
+                    {img.map((item, id) => {
+                        return(
+                            <Carousel.Item>
+                                <img src={item} alt='{item}' style={{ width: '100%'}} key={id}></img>
+                            </Carousel.Item>
+                        )
+                    })}
+                </Carousel>
+            )
+            
+        }
 
-        
+    }
+
+    createCharTable(title, charItem) {
+        return(
+            <Table hover>
+                <thead>
+                    <tr>
+                        <th style={{ width: '100px'}}>{title}</th>
+                        <th ></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {Object.keys(charItem).map((item, id) => {
+                            return(
+                                <tr style={{wordBreak: 'break-all'}}>
+                                    <td>
+                                        {item.charAt(0).toUpperCase() + item.slice(1)}
+                                    </td>
+                                    {typeof charItem[item] === 'object' && !Array.isArray(charItem[item]) && 
+                                        <td>
+                                            {Object.keys(charItem[item]).map((elem, id) => {
+                                                return(
+                                                    <Fragment>
+                                                        {elem.charAt(0).toUpperCase() + elem.slice(1)} : {charItem[item][elem]} <br/>
+                                                    </Fragment>
+                                                    )
+                                            })}
+                                        </td> }
+                                    {typeof charItem[item] === 'object' && Array.isArray(charItem[item]) && 
+                                        <td>
+                                            {charItem[item].map((elem) => {
+                                                return(
+                                                    <Fragment>{elem}<br/></Fragment>)
+                                                }) 
+                                            }
+                                        </td>}
+                                    {typeof charItem[item] !== 'object' && <td>{charItem[item]}</td> }
+                                </tr>
+                            )
+                    })}
+                </tbody>
+            </Table>
+
+        )
     }
 
 
@@ -61,29 +115,23 @@ class SelectedItem extends Component {
         if(!this.state.item) {
             return <Card style={{ width: '100%', height: '300px', marginTop: '50px', textAlign:'center', paddingTop: '20px' }} >Please select a character</Card>
         }
-        
-        const res = this.state.item
-        const debut = this.state.debut
-        const anime = debut ? debut.anime : 'none'
-        const manga = debut ? debut.manga : 'none'
-        const birthdate = this.state.personal.birthdate ? this.state.personal.birthdate : 'unknown'
-        const status = this.state.personal.status ? this.state.personal.status : 'unknown'
-        const img = this.state.img ? this.state.img.split('png')[0] + 'png' : NotFoundImg
+        const item = this.state.item
+
         return (
             <Card style={{ width: '100%', marginTop: '50px' }} >
-                <Card.Img variant="top" src= {img} />
+                {this.createImg(item.images)}
                 <Card.Body>
-                    <Card.Title>{res.name}</Card.Title>
+                    <Card.Title>{item.name}</Card.Title>
                     <Card.Text>
                     Some quick example text to build on the card title and make up the
                     bulk of the card's content.
                     </Card.Text>
                     <ListGroup className="list-group-flush">
-                        <ListGroup.Item>Birth date: {birthdate}</ListGroup.Item>
-                        <ListGroup.Item>Status: {status}</ListGroup.Item>
-                        <ListGroup.Item>Anime: {anime}</ListGroup.Item>
-                        <ListGroup.Item>Manga: {manga}</ListGroup.Item>
-                        <ListGroup.Item>{this.props.jutsu}</ListGroup.Item>
+                        {item.debut && this.createCharTable('Appearance', item.debut)}
+                        {item.family && this.createCharTable('Family', item.family)}
+                        {item.personal && this.createCharTable('Personal', item.personal)}
+                        {item.voiceActors && this.createCharTable('Voice Actors', item.voiceActors)}
+                        
                     </ListGroup>
                     {/* <Button variant="primary">Go somewhere</Button> */}
                 </Card.Body>
@@ -93,3 +141,5 @@ class SelectedItem extends Component {
 }
  
 export default SelectedItem;
+
+

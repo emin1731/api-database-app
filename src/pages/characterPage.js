@@ -7,6 +7,8 @@ import SelectedItem from '../components/SelectedItem';
 import NarutoDB from '../service/NarutoDB';
 import PaginationBar from '../components/Pagination';
 
+
+
 class CharacterPage extends Component {
     NarutoDB = new NarutoDB()
 
@@ -14,11 +16,29 @@ class CharacterPage extends Component {
         super(props);
         this.state = {
             itemId: null,
-            currentPage: 20,
+            currentPage: 1,
             characterList: null,
-            totalCharacters: null
+            totalCharacters: null,
+            isLoading: true
 
         }
+    }
+    updateCharacter() {
+        this.NarutoDB.getAllCharacters(this.state.currentPage)
+        .then((characterList) => {
+            
+            this.setState({
+                characterList
+            })
+            
+        })
+        .then(
+            setTimeout(() => {
+                this.setState({
+                    isLoading: false
+                }) 
+            }, 1000)
+        )
     }
     componentDidMount() {
         this.NarutoDB.getTotalCharacterCount()
@@ -28,30 +48,32 @@ class CharacterPage extends Component {
             })
         })
 
-        this.NarutoDB.getAllCharacters(this.state.currentPage)
-        .then((characterList) => {
+        // this.NarutoDB.getAllCharacters(this.state.currentPage)
+        // .then((characterList) => {
             
-            this.setState({
-                characterList
-            })
+        //     this.setState({
+        //         characterList
+        //     })
             
-        })
-        
+        // })
+        this.updateCharacter()
  
 
     }
+
     
     componentDidUpdate(prevProps, prevState) {
         if(prevState.currentPage !== this.state.currentPage) {
-        console.log('UPDATE', prevState)
-        this.NarutoDB.getAllCharacters(this.state.currentPage)
-        .then((characterList) => {
+        // console.log('UPDATE', prevState)
+        // this.NarutoDB.getAllCharacters(this.state.currentPage)
+        // .then((characterList) => {
             
-            this.setState({
-                characterList
-            })
+        //     this.setState({
+        //         characterList
+        //     })
             
-        })
+        // })
+        this.updateCharacter()
         }
 
         
@@ -79,7 +101,8 @@ class CharacterPage extends Component {
                             data={this.NarutoDB.getAllCharacters} 
                             onItemSelected={(id) => this.onItemSelected(id)}
                             currentPage={this.state.currentPage}
-                            itemList={this.state.characterList}/>
+                            itemList={this.state.characterList}
+                            isLoading={this.state.isLoading}/>
                         <PaginationBar
                             currentPage={this.state.currentPage}
                             totalCount={this.state.totalCharacters}

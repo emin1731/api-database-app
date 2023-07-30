@@ -11,6 +11,9 @@ class NarutoDB {
         .then(data => {
             res = data
         })
+        .catch(
+            console.log('Fetch error')
+        )
         return res;
     }
     getAllCharacters = async (page) => {
