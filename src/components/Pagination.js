@@ -39,15 +39,15 @@ const PaginationBar = (props) =>  {
             <Pagination.First disabled = {currentPage === 1} onClick={() => onPageChange(1)}/>
             <Pagination.Prev disabled = {currentPage === 1} onClick={onPrev}/>
             {
-                paginationRange.map(item => {
+                paginationRange.map((item, id) => {
                     if(item === 'DOTS') {
-                        return <Pagination.Ellipsis />
+                        return <Pagination.Ellipsis key={id}/>
                     }
                     if(item === currentPage) {
-                        return <Pagination.Item active>{item}</Pagination.Item>
+                        return <Pagination.Item active key={id}>{item}</Pagination.Item>
                     }
 
-                    return <Pagination.Item  onClick={() => onPageChange(item)} className='pagination-item'>{item}</Pagination.Item>
+                    return <Pagination.Item  onClick={() => onPageChange(item)} className='pagination-item' key={id}>{item}</Pagination.Item>
                 })
             }
 

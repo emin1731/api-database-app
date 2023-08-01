@@ -1,5 +1,5 @@
 // import {Container, Row, Col} from 'react-bootstrap'
-import { Component, Fragment } from 'react';
+import { Component,Row, Fragment } from 'react';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Carousel from 'react-bootstrap/Carousel';
@@ -7,6 +7,7 @@ import Table from 'react-bootstrap/Table';
 
 
 import NotFoundImg from '../img/no-image.jpg'
+import { Container } from 'react-bootstrap';
 
 
 class SelectedItem extends Component {
@@ -78,7 +79,7 @@ class SelectedItem extends Component {
                 <tbody>
                     {Object.keys(charItem).map((item, id) => {
                             return(
-                                <tr style={{wordBreak: 'break-all'}}>
+                                <tr style={{wordBreak: 'break-all'}} key={id}>
                                     <td>
                                         {item.charAt(0).toUpperCase() + item.slice(1)}
                                     </td>
@@ -86,7 +87,7 @@ class SelectedItem extends Component {
                                         <td>
                                             {Object.keys(charItem[item]).map((elem, id) => {
                                                 return(
-                                                    <Fragment>
+                                                    <Fragment key={id}>
                                                         {elem.charAt(0).toUpperCase() + elem.slice(1)} : {charItem[item][elem]} <br/>
                                                     </Fragment>
                                                     )
@@ -94,9 +95,9 @@ class SelectedItem extends Component {
                                         </td> }
                                     {typeof charItem[item] === 'object' && Array.isArray(charItem[item]) && 
                                         <td>
-                                            {charItem[item].map((elem) => {
+                                            {charItem[item].map((elem, id) => {
                                                 return(
-                                                    <Fragment>{elem}<br/></Fragment>)
+                                                    <Fragment key={id} >{elem}<br/></Fragment>)
                                                 }) 
                                             }
                                         </td>}
@@ -118,7 +119,9 @@ class SelectedItem extends Component {
         const item = this.state.item
 
         return (
-            <Card style={{ width: '100%', marginTop: '50px' }} >
+
+
+                <Card style={{ width: '100%', marginTop: '50px' }} >
                 {this.createImg(item.images)}
                 <Card.Body>
                     <Card.Title>{item.name}</Card.Title>
@@ -136,6 +139,10 @@ class SelectedItem extends Component {
                     {/* <Button variant="primary">Go somewhere</Button> */}
                 </Card.Body>
             </Card>
+
+
+
+
         );
     }
 }

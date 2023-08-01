@@ -8,24 +8,35 @@ import 'react-loading-skeleton/dist/skeleton.css'
 
 function ItemTable({onItemSelected, itemList, isLoading}) {
 
-    // const [loading, setLoading] = useState(true)
-
     function renderItems(arr) {
         if(arr){
             return arr.map((item, id) => {
                  return (
                     <tr className="" key={id} onClick={() => onItemSelected(item.id)} style={{cursor: 'pointer'}}>
-                        <td>{isLoading ? <Skeleton/> : item.id}</td>
-                        <td>{isLoading ? <Skeleton/> : item.name}</td>
+                        <td>{item.id}</td>
+                        <td>{item.name}</td>
                     </tr>
                 );
             });
          }
     }
-    // function onItemLoaded() {
-    //     // setLoading(false)
-    // }
-    const items = renderItems(itemList)
+    let items
+    if(isLoading) {
+        items = Array.from({length: 10}, (_, index) => {
+            return (
+                <tr className="" key={index}>
+    
+                   <td><Skeleton/></td>
+                   <td><Skeleton/></td>
+               </tr>
+           );
+        })
+    }
+    else {
+        items = renderItems(itemList)
+    }
+    
+    
 
     return (
         <div style={{paddingTop: '50px'}}>

@@ -1,5 +1,5 @@
 import { Component } from 'react'
-import {Container, Row, Col} from 'react-bootstrap'
+import {Container, Row, Col, Button} from 'react-bootstrap'
 
 import RandomCards from '../components/RandomCards';
 import ItemTable from '../components/ItemTable';
@@ -19,7 +19,8 @@ class CharacterPage extends Component {
             currentPage: 1,
             characterList: null,
             totalCharacters: null,
-            isLoading: true
+            isLoading: true,
+            isRandHided: false
 
         }
     }
@@ -47,15 +48,6 @@ class CharacterPage extends Component {
                 totalCharacters: res
             })
         })
-
-        // this.NarutoDB.getAllCharacters(this.state.currentPage)
-        // .then((characterList) => {
-            
-        //     this.setState({
-        //         characterList
-        //     })
-            
-        // })
         this.updateCharacter()
  
 
@@ -64,15 +56,6 @@ class CharacterPage extends Component {
     
     componentDidUpdate(prevProps, prevState) {
         if(prevState.currentPage !== this.state.currentPage) {
-        // console.log('UPDATE', prevState)
-        // this.NarutoDB.getAllCharacters(this.state.currentPage)
-        // .then((characterList) => {
-            
-        //     this.setState({
-        //         characterList
-        //     })
-            
-        // })
         this.updateCharacter()
         }
 
@@ -89,12 +72,8 @@ class CharacterPage extends Component {
 
     
     render() { 
-
         return (
             <Container>
-                <Row>
-                    <RandomCards/>
-                </Row>
                 <Row>
                     <Col lg='8'>
                         <ItemTable 
@@ -103,6 +82,8 @@ class CharacterPage extends Component {
                             currentPage={this.state.currentPage}
                             itemList={this.state.characterList}
                             isLoading={this.state.isLoading}/>
+
+
                         <PaginationBar
                             currentPage={this.state.currentPage}
                             totalCount={this.state.totalCharacters}
@@ -115,6 +96,27 @@ class CharacterPage extends Component {
                         itemId = {this.state.itemId}
                         getData = {this.NarutoDB.getCharacter}
                         />
+                        <Row style={{marginTop: '50px'}}>
+                            <Col sm='9'>
+                                <h3>Random Characters</h3>
+                            </Col>
+                            <Col sm='3'>
+                                <Button 
+                                    variant="secondary" 
+                                    size="sm" 
+                                    style={{width: '100%'}}
+                                    onClick={() => this.setState({isRandHided: !this.state.isRandHided})}>{this.state.isRandHided ? 'Show' : 'Hide'}</Button>
+                            </Col>
+                            {
+                                this.state.isRandHided 
+                                ? null
+                                : <RandomCards 
+                                    getChar={this.NarutoDB.getCharacter} 
+                                    totalCharacters={this.state.totalCharacters}
+                                    onItemSelected={(id) => this.onItemSelected(id)}/>
+                            }
+                            
+                        </Row>
                     </Col>
                 </Row>
 

@@ -12,7 +12,7 @@ class NarutoDB {
             res = data
         })
         .catch(
-            console.log('Fetch error')
+            console.log('Fetch error', url)
         )
         return res;
     }
