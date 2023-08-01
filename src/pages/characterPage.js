@@ -1,11 +1,11 @@
 import { Component } from 'react'
 import {Container, Row, Col, Button} from 'react-bootstrap'
 
-import RandomCards from '../components/RandomCards';
 import ItemTable from '../components/ItemTable';
 import SelectedItem from '../components/SelectedItem';
 import NarutoDB from '../service/NarutoDB';
 import PaginationBar from '../components/Pagination';
+import RandomCard from '../components/RandomCard';
 
 
 
@@ -110,7 +110,7 @@ class CharacterPage extends Component {
                             {
                                 this.state.isRandHided 
                                 ? null
-                                : <RandomCards 
+                                : <RandomCard 
                                     getChar={this.NarutoDB.getCharacter} 
                                     totalCharacters={this.state.totalCharacters}
                                     onItemSelected={(id) => this.onItemSelected(id)}/>

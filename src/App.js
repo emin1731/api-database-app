@@ -3,7 +3,7 @@ import './App.css';
 import React from 'react';
 
 import Header from './components/Header';
-import RandomCards from './components/RandomCards';
+// import RandomCards from './components/RandomCards';
 import ItemTable from './components/ItemTable';
 // import { Container } from 'react-bootstrap';
 import {Container, Row, Col} from 'react-bootstrap'

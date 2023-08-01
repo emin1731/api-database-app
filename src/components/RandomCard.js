@@ -1,37 +1,32 @@
-import { Component} from 'react';
+import { Component, useEffect, useState, useCallback} from 'react';
 import Card from 'react-bootstrap/Card';
 import Skeleton from 'react-loading-skeleton';
 
 import NotFoundImg from '../img/no-image.jpg'
 
-class RandomCards extends Component  {
-    state = {
-        itemList: null,
-        isLoading: true
-    }
-    componentDidMount() {
-        this.createCharList()
+function RandomCard({getChar, onItemSelected}) {
+    const [charItem, setCharItem] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
 
-        let arr = Math.floor((Math.random() * 1430))
-        console.log("RAND", arr)
-    }
-    componentDidUpdate(prevProps) {
-        if(this.props.itemId !== prevProps.itemId) {
-            
-        }
-    }
-    createCharList() {
-        const {getChar} = this.props
+    const createCharList = useCallback(() => {
         getChar(Math.floor((Math.random() * 1430)))
             .then(item => {
-                this.setState({itemList: item})
-                this.setState({isLoading: false})
+                setCharItem(item)
+                setIsLoading(false)
             })   
-    }
+    }, [getChar])
 
-    renderCard(item) {
+    useEffect(() => {
+        createCharList()
+        let timerId = setInterval(createCharList, 10000)
+        return() => {
+            clearInterval(timerId)
+        }
+    }, [createCharList]);    
+
+    function renderCard(item) {
         return(
-            <Card style={{ width: '100%' }} onClick={() => this.props.onItemSelected(item.id)} >
+            <Card style={{ width: '100%' }} onClick={() => onItemSelected(item.id)} >
                 <Card.Img variant="top" src= {item.images.length ? item.images[0] : NotFoundImg} />
                 <Card.Body>
                     <Card.Title>{item.name}</Card.Title>
@@ -43,7 +38,8 @@ class RandomCards extends Component  {
         )
         
     }
-    renderSkeleton() {
+
+    function renderSkeleton() {
         return(
             <Card style={{ width: '100%'}} >
                 <Skeleton style={{height: '300px'}}></Skeleton>
@@ -57,16 +53,13 @@ class RandomCards extends Component  {
         )
     }
 
-    render() {
-        return ( 
-                this.state.isLoading 
-                ? this.renderSkeleton() 
-                : this.renderCard(this.state.itemList)
-        )
-    }
-    
+    return ( 
+            isLoading 
+            ? renderSkeleton() 
+            : renderCard(charItem)
+    )
 
 }
 
  
-export default RandomCards;
+export default RandomCard;

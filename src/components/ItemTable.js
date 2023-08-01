@@ -22,7 +22,7 @@ function ItemTable({onItemSelected, itemList, isLoading}) {
     }
     let items
     if(isLoading) {
-        items = Array.from({length: 10}, (_, index) => {
+        items = Array.from({length: 20}, (_, index) => {
             return (
                 <tr className="" key={index}>
     

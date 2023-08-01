@@ -4,7 +4,7 @@ import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Carousel from 'react-bootstrap/Carousel';
 import Table from 'react-bootstrap/Table';
-
+import Skeleton from 'react-loading-skeleton';
 
 import NotFoundImg from '../img/no-image.jpg'
 import { Container } from 'react-bootstrap';
@@ -114,7 +114,20 @@ class SelectedItem extends Component {
 
     render() { 
         if(!this.state.item) {
-            return <Card style={{ width: '100%', height: '300px', marginTop: '50px', textAlign:'center', paddingTop: '20px' }} >Please select a character</Card>
+            return (
+                <Card style={{ width: '100%', marginTop: '50px' }} >
+                    <Skeleton style={{height: '300px'}}></Skeleton>
+                    <Card.Body style={{width: '70%'}}>
+                        <Card.Title>Please select a character</Card.Title>
+                        <Card.Text>
+                            <Skeleton count={5}/>
+                        </Card.Text>
+                    </Card.Body>
+                </Card>
+            )
+            
+            
+            // <Card style={{ width: '100%', height: '300px', marginTop: '50px', textAlign:'center', paddingTop: '20px' }} ><h3>Please select a character</h3></Card>
         }
         const item = this.state.item
 
