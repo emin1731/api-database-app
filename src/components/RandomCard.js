@@ -9,7 +9,8 @@ function RandomCard({getChar, onItemSelected}) {
     const [isLoading, setIsLoading] = useState(true);
 
     const createCharList = useCallback(() => {
-        getChar(Math.floor((Math.random() * 1430)))
+        // getChar(Math.floor((Math.random() * 1430)))
+        getChar(Math.floor((Math.random() * 826)))
             .then(item => {
                 setCharItem(item)
                 setIsLoading(false)
@@ -18,7 +19,7 @@ function RandomCard({getChar, onItemSelected}) {
 
     useEffect(() => {
         createCharList()
-        let timerId = setInterval(createCharList, 10000)
+        let timerId = setInterval(createCharList, 30000)
         return() => {
             clearInterval(timerId)
         }
@@ -27,7 +28,8 @@ function RandomCard({getChar, onItemSelected}) {
     function renderCard(item) {
         return(
             <Card style={{ width: '100%' }} onClick={() => onItemSelected(item.id)} >
-                <Card.Img variant="top" src= {item.images.length ? item.images[0] : NotFoundImg} />
+                <Card.Img variant="top" src= {item.image} />
+                {/* <Card.Img variant="top" src= {item.images.length ? item.images[0] : NotFoundImg} /> */}
                 <Card.Body>
                     <Card.Title>{item.name}</Card.Title>
                     <Card.Text>

@@ -3,14 +3,15 @@ import {Container, Row, Col, Button} from 'react-bootstrap'
 
 import ItemTable from '../components/ItemTable';
 import SelectedItem from '../components/SelectedItem';
-import NarutoDB from '../service/NarutoDB';
+import RickAndMortyDB from '../service/RickAndMortyDB';
 import PaginationBar from '../components/Pagination';
 import RandomCard from '../components/RandomCard';
+import Header from '../components/Header';
 
 
 
 class CharacterPage extends Component {
-    NarutoDB = new NarutoDB()
+    RickAndMortyDB = new RickAndMortyDB()
 
     constructor(props) {
         super(props);
@@ -18,14 +19,14 @@ class CharacterPage extends Component {
             itemId: null,
             currentPage: 1,
             characterList: null,
-            totalCharacters: null,
+            totalCharacters: 826,
             isLoading: true,
             isRandHided: false
 
         }
     }
     updateCharacter() {
-        this.NarutoDB.getAllCharacters(this.state.currentPage)
+        this.RickAndMortyDB.getAllCharacters(this.state.currentPage)
         .then((characterList) => {
             
             this.setState({
@@ -42,12 +43,12 @@ class CharacterPage extends Component {
         )
     }
     componentDidMount() {
-        this.NarutoDB.getTotalCharacterCount()
-        .then((res) => {
-            this.setState({
-                totalCharacters: res
-            })
-        })
+        // this.RickAndMortyDB.getTotalCharacterCount()
+        // .then((res) => {
+        //     this.setState({
+        //         totalCharacters: res
+        //     })
+        // })
         this.updateCharacter()
  
 
@@ -74,10 +75,11 @@ class CharacterPage extends Component {
     render() { 
         return (
             <Container>
+                {/* <Header/> */}
                 <Row>
                     <Col lg='8'>
                         <ItemTable 
-                            data={this.NarutoDB.getAllCharacters} 
+                            data={this.RickAndMortyDB.getAllCharacters} 
                             onItemSelected={(id) => this.onItemSelected(id)}
                             currentPage={this.state.currentPage}
                             itemList={this.state.characterList}
@@ -94,7 +96,8 @@ class CharacterPage extends Component {
                     <Col lg='4'>
                         <SelectedItem
                         itemId = {this.state.itemId}
-                        getData = {this.NarutoDB.getCharacter}
+                        getData = {this.RickAndMortyDB.getCharacter}
+                        // onLocationClicked = {}
                         />
                         <Row style={{marginTop: '50px'}}>
                             <Col sm='9'>
@@ -111,7 +114,7 @@ class CharacterPage extends Component {
                                 this.state.isRandHided 
                                 ? null
                                 : <RandomCard 
-                                    getChar={this.NarutoDB.getCharacter} 
+                                    getChar={this.RickAndMortyDB.getCharacter} 
                                     totalCharacters={this.state.totalCharacters}
                                     onItemSelected={(id) => this.onItemSelected(id)}/>
                             }

@@ -1,16 +1,23 @@
-// import logo from './logo.svg';
-import './App.css';
 import React from 'react';
+import './App.css';
 
-import Header from './components/Header';
-// import RandomCards from './components/RandomCards';
-import ItemTable from './components/ItemTable';
-// import { Container } from 'react-bootstrap';
 import {Container, Row, Col} from 'react-bootstrap'
-import SelectedItem from './components/SelectedItem';
-
+import Header from './components/Header';
 import CharacterPage from './pages/characterPage';
-import NarutoDB from './service/NarutoDB';
+
+import {createBrowserRouter, RouterProvider} from "react-router-dom";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <h1>Please select section</h1>,
+  },
+  {
+    path: "/characters",
+    element: <CharacterPage/>,
+  },
+]);
+
 
 function App() {
   
@@ -22,7 +29,10 @@ function App() {
         <Header/>
 
       </Row>
-      <CharacterPage/>
+
+        <RouterProvider router={router}/>
+
+      {/* <CharacterPage/> */}
     </Container>
 
   );

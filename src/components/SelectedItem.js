@@ -36,8 +36,8 @@ class SelectedItem extends Component {
         .then(item => {
             this.setState({
                 item: item,
-                img: item.images[0],
-                img_arr: item.images,
+                img: item.image,
+                img_arr: item.image,
                 debut: item.debut,
                 personal: item.personal
             })
@@ -135,7 +135,8 @@ class SelectedItem extends Component {
 
 
                 <Card style={{ width: '100%', marginTop: '50px' }} >
-                {this.createImg(item.images)}
+                {/* {this.createImg(item.images)} */}
+                <Card.Img variant="top" src= {item.image} />
                 <Card.Body>
                     <Card.Title>{item.name}</Card.Title>
                     <Card.Text>
@@ -143,10 +144,17 @@ class SelectedItem extends Component {
                     bulk of the card's content.
                     </Card.Text>
                     <ListGroup className="list-group-flush">
-                        {item.debut && this.createCharTable('Appearance', item.debut)}
+                        <ListGroup.Item>Gender: {item.gender}</ListGroup.Item>
+                        <ListGroup.Item>Species: {item.species}</ListGroup.Item>
+                        {item.type && <ListGroup.Item>Type: {item.type}</ListGroup.Item>}
+                        <ListGroup.Item>Status: {item.status}</ListGroup.Item>
+                        <ListGroup.Item action onClick={() => this.props.onLocationClicked(item.origin.url)}>Origin: {item.origin.name}</ListGroup.Item>
+                        <ListGroup.Item>Location: {item.location.name}</ListGroup.Item>
+                        {/* <ListGroup.Item>Origin: {item.origin.name}</ListGroup.Item> */}
+                        {/* {item.debut && this.createCharTable('Appearance', item.debut)}
                         {item.family && this.createCharTable('Family', item.family)}
                         {item.personal && this.createCharTable('Personal', item.personal)}
-                        {item.voiceActors && this.createCharTable('Voice Actors', item.voiceActors)}
+                        {item.voiceActors && this.createCharTable('Voice Actors', item.voiceActors)} */}
                         
                     </ListGroup>
                     {/* <Button variant="primary">Go somewhere</Button> */}
