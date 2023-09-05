@@ -1,12 +1,16 @@
+// Rick and Morty API
+
 
 class NarutoDB {
     constructor() {
         // super(props);
-        this._apiBase='https://api.narutodb.xyz/'
+        this._apiBase='https://narutodb.xyz/api/'
     }
     getResource = async (url) => {
         let res
-        await fetch(`${this._apiBase}${url}`)
+        await fetch(`${this._apiBase}${url}`, {    
+            mode: 'no-cors'
+          })
         .then(response => response.json())
         .then(data => {
             res = data
@@ -51,6 +55,8 @@ class NarutoDB {
     }
 
 }
+
+
  
 export default NarutoDB;
 
