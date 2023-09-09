@@ -26,16 +26,24 @@ class RickAndMortyDB {
         let character = await this.getResource(`character/${id}`)
         return this._transformCharacter(character, id)
     }
-    getLocation = async (type, ref) => {
-        if(type === "url") {
-            const url = ref.replace("https://rickandmortyapi.com/api/", "")
-            const location = await this.getResource(url)
-            return this._transformLocation(location)
-        }
-        if(type === "id") {
+    getAllLocations = async (page) => {
+        let result = await this.getResource(`location?page=${page}`)
+        result = result.results
+        return result.map(this._transformLocation)
+
+    }
+    getLocation = async (ref) => {
+        // if(type === "url") {
+            // const url = ref.replace("https://rickandmortyapi.com/api/", "")
+            // const location = await this.getResource(url)
+            // return this._transformLocation(location)
+        // }
+        // if(type === "id") {
             let location = await this.getResource(`location/${ref}`)
-            return this._transformLocation(location)
-        }
+            // location = location.results
+            console.log("LOCATION", location)
+            return this._transformLocation(location, ref)
+        // }
     }
     _transformCharacter(char, id) {
         return {

@@ -7,6 +7,7 @@ import CharacterPage from './routes/characterPage';
 
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import Root from './routes/Root';
+import LocationPage from './routes/locationPage';
 
 
 const router = createBrowserRouter([
@@ -15,12 +16,20 @@ const router = createBrowserRouter([
     element: <Root />,
     children: [
       {
-        path: "/characters/",
+        path: "/character/",
         element: <CharacterPage/>,
       },
       {
-        path: "/characters/:id",
+        path: "/character/:id",
         element: <CharacterPage/>,
+      },
+      {
+        path: "/location",
+        element: <LocationPage/>,
+      },
+      {
+        path: "/location/:id",
+        element: <LocationPage/>,
       },
     ]
   },

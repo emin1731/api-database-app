@@ -2,7 +2,7 @@ import { Component } from 'react'
 import {Container, Row, Col, Button} from 'react-bootstrap'
 
 import ItemTable from '../components/ItemTable';
-import SelectedItem from '../components/SelectedItem';
+import SelectedLocation from '../components/SelectedLocation';
 import RickAndMortyDB from '../service/RickAndMortyDB';
 import PaginationBar from '../components/Pagination';
 import RandomCard from '../components/RandomCard';
@@ -10,11 +10,12 @@ import Header from '../components/Header';
 
 import { useParams } from 'react-router-dom';
 
+
 function withParams(Component) {
     return props => <Component {...props} params={useParams()}/>
 }
 
-class CharacterPage extends Component {
+class LocationPage extends Component {
     RickAndMortyDB = new RickAndMortyDB()
 
     constructor(props) {
@@ -22,8 +23,8 @@ class CharacterPage extends Component {
         this.state = {
             itemId: null,
             currentPage: 1,
-            characterList: null,
-            totalCharacters: 826,
+            locationList: null,
+            totalLocations: 126,
             isLoading: true,
             isRandHided: false
 
@@ -31,12 +32,12 @@ class CharacterPage extends Component {
     }
 
 
-    updateCharacter() {
-        this.RickAndMortyDB.getAllCharacters(this.state.currentPage)
-        .then((characterList) => {
+    updateLocation() {
+        this.RickAndMortyDB.getAllLocations(this.state.currentPage)
+        .then((locationList) => {
             
             this.setState({
-                characterList
+                locationList
             })
             
         })
@@ -55,7 +56,7 @@ class CharacterPage extends Component {
             })
             console.log(this.props.params)
         }
-        this.updateCharacter()
+        this.updateLocation()
  
 
     }
@@ -63,7 +64,7 @@ class CharacterPage extends Component {
     
     componentDidUpdate(prevProps, prevState) {
         if(prevState.currentPage !== this.state.currentPage) {
-        this.updateCharacter()
+        this.updateLocation()
         }
     }
    
@@ -81,30 +82,29 @@ class CharacterPage extends Component {
                 <Row>
                     <Col lg='8'>
                         <ItemTable 
-                            data={this.RickAndMortyDB.getAllCharacters} 
+                            data={this.RickAndMortyDB.getAllLocations} 
                             onItemSelected={(id) => this.onItemSelected(id)}
                             currentPage={this.state.currentPage}
-                            itemList={this.state.characterList}
+                            itemList={this.state.locationList}
                             isLoading={this.state.isLoading}
-                            itemPath={'character'}/>
+                            itemPath={'location'}/>
 
 
                         <PaginationBar
                             currentPage={this.state.currentPage}
-                            totalCount={this.state.totalCharacters}
+                            totalCount={this.state.totalLocations}
                             pageSize={20}
                             onPageChange={page => this.setState({currentPage: page})}
                             />
                     </Col>
                     <Col lg='4'>
-                        <SelectedItem
-                        itemId = {this.state.itemId}
-                        getData = {this.RickAndMortyDB.getCharacter}
-                        // onLocationClicked = {}
+                        <SelectedLocation
+                            itemId = {this.state.itemId}
+                            getData = {this.RickAndMortyDB.getLocation}
                         />
                         <Row style={{marginTop: '50px'}}>
                             <Col sm='9'>
-                                <h3>Random Characters</h3>
+                                <h3>Random Locations</h3>
                             </Col>
                             <Col sm='3'>
                                 <Button 
@@ -117,11 +117,11 @@ class CharacterPage extends Component {
                                 this.state.isRandHided 
                                 ? null
                                 : <RandomCard 
-                                    getChar={this.RickAndMortyDB.getCharacter} 
-                                    totalCharacters={this.state.totalCharacters}
+                                    getChar={this.RickAndMortyDB.getLocation} 
+                                    totalCharacters={this.state.totalLocations}
                                     onItemSelected={(id) => this.onItemSelected(id)}
-                                    itemCount={826}
-                                    itemPath={'character'}/>
+                                    itemCount={126}
+                                    itemPath={'location'}/>
                             }
                         </Row>
                     </Col>
@@ -131,4 +131,4 @@ class CharacterPage extends Component {
     }
 }
  
-export default withParams(CharacterPage);
+export default withParams(LocationPage);

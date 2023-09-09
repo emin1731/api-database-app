@@ -63,7 +63,7 @@ function SelectedItem({itemId, getData}) {
 
     return (
         <Card style={{ width: '100%', marginTop: '50px' }} >
-            <Card.Img variant="top" src= {item.image} />
+            {item.image ? <Card.Img variant="top" src= {item.image} /> : NotFoundImg}
             <Card.Body>
                 <Card.Title>{item.name}</Card.Title>
                 <Card.Text>
@@ -86,6 +86,7 @@ function SelectedItem({itemId, getData}) {
 
     );
 }
+export default SelectedItem;
 
 // export default SelectedItem;
 
@@ -170,7 +171,7 @@ function SelectedItem({itemId, getData}) {
 //     }
 // }
  
-export default SelectedItem;
+
 
 
 // createImg(img) {

@@ -3,7 +3,7 @@ import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { Link } from 'react-router-dom';
 
-function ItemTable({onItemSelected, itemList, isLoading}) {
+function ItemTable({onItemSelected, itemList, isLoading, itemPath}) {
 
     function renderItems(arr) {
         if(arr){
@@ -12,7 +12,7 @@ function ItemTable({onItemSelected, itemList, isLoading}) {
                      <tr className="" key={id}>
                         <td>{item.id}</td>
                         <td>
-                            <Link to={`/characters/${item.id}`} onClick={() => onItemSelected(item.id)} style={{textDecoration: 'none', color: 'inherit', display: 'block'}}>
+                            <Link to={`/${itemPath}/${item.id}`} onClick={() => onItemSelected(item.id)} style={{textDecoration: 'none', color: 'inherit', display: 'block'}}>
                                 {item.name}
                             </Link>
                         </td>

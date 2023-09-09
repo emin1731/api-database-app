@@ -15,7 +15,9 @@ function Root() {
         <Container fluid>
             <Row>
                 <Header/>
-                <Outlet/>
+                <Container>
+                    <Outlet/>
+                </Container>
             </Row>
         </Container>
     );

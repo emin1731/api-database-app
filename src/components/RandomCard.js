@@ -3,14 +3,15 @@ import Card from 'react-bootstrap/Card';
 import Skeleton from 'react-loading-skeleton';
 
 import NotFoundImg from '../img/no-image.jpg'
+import { Link } from 'react-router-dom';
 
-function RandomCard({getChar, onItemSelected}) {
+function RandomCard({getChar, onItemSelected, itemCount, itemPath}) {
     const [charItem, setCharItem] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
     const createCharList = useCallback(() => {
         // getChar(Math.floor((Math.random() * 1430)))
-        getChar(Math.floor((Math.random() * 826)))
+        getChar(Math.floor((Math.random() * itemCount)))
             .then(item => {
                 setCharItem(item)
                 setIsLoading(false)
@@ -19,7 +20,7 @@ function RandomCard({getChar, onItemSelected}) {
 
     useEffect(() => {
         createCharList()
-        let timerId = setInterval(createCharList, 30000)
+        let timerId = setInterval(createCharList, 5000)
         return() => {
             clearInterval(timerId)
         }
@@ -28,10 +29,14 @@ function RandomCard({getChar, onItemSelected}) {
     function renderCard(item) {
         return(
             <Card style={{ width: '100%' }} onClick={() => onItemSelected(item.id)} >
-                <Card.Img variant="top" src= {item.image} />
-                {/* <Card.Img variant="top" src= {item.images.length ? item.images[0] : NotFoundImg} /> */}
+                {item.image && <Card.Img variant="top" src= {item.image} />}
+                {/* <Card.Img variant="top" src= {item.image ? item.image : NotFoundImg} /> */}
                 <Card.Body>
-                    <Card.Title>{item.name}</Card.Title>
+                    <Card.Title>
+                        <Link to={`/${itemPath}/${item.id}`}>
+                            {item.name}
+                        </Link>
+                        </Card.Title>
                     <Card.Text>
                         id: {item.id}
                     </Card.Text>
