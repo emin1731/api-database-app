@@ -1,10 +1,7 @@
 import Table from 'react-bootstrap/Table';
-import Spinner from 'react-bootstrap/Spinner';
-import { useState } from 'react';
-
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
-
+import { Link } from 'react-router-dom';
 
 function ItemTable({onItemSelected, itemList, isLoading}) {
 
@@ -12,9 +9,13 @@ function ItemTable({onItemSelected, itemList, isLoading}) {
         if(arr){
             return arr.map((item, id) => {
                  return (
-                    <tr className="" key={id} onClick={() => onItemSelected(item.id)} style={{cursor: 'pointer'}}>
+                     <tr className="" key={id}>
                         <td>{item.id}</td>
-                        <td>{item.name}</td>
+                        <td>
+                            <Link to={`/characters/${item.id}`} onClick={() => onItemSelected(item.id)} style={{textDecoration: 'none', color: 'inherit', display: 'block'}}>
+                                {item.name}
+                            </Link>
+                        </td>
                     </tr>
                 );
             });

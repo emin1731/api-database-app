@@ -7,6 +7,8 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 
 import './../styles/Header.css'
 
+import { Link } from 'react-router-dom';
+
 function Header() {
     return (
         <Navbar expand="md" className="bg-body-tertiary ">
@@ -15,9 +17,15 @@ function Header() {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="me-auto">
-                    <Nav.Link href="/characters">Characters</Nav.Link>
-                    <Nav.Link href="#link">Locations</Nav.Link>
-                    <Nav.Link href="#link">Episodes</Nav.Link>
+                    <Nav.Link as={Link} to={"/characters"}>
+                        Characters
+                    </Nav.Link>
+                    <Nav.Link as={Link} to={"/locations"}>
+                        Locations
+                    </Nav.Link>
+                    <Nav.Link as={Link} to={"/episodes"}>
+                        Episodes
+                    </Nav.Link>
                     <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                         <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                         <NavDropdown.Item href="#action/3.2">

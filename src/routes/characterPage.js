@@ -8,7 +8,11 @@ import PaginationBar from '../components/Pagination';
 import RandomCard from '../components/RandomCard';
 import Header from '../components/Header';
 
+import { useParams } from 'react-router-dom';
 
+function withParams(Component) {
+    return props => <Component {...props} params={useParams()}/>
+}
 
 class CharacterPage extends Component {
     RickAndMortyDB = new RickAndMortyDB()
@@ -25,6 +29,8 @@ class CharacterPage extends Component {
 
         }
     }
+
+
     updateCharacter() {
         this.RickAndMortyDB.getAllCharacters(this.state.currentPage)
         .then((characterList) => {
@@ -43,12 +49,12 @@ class CharacterPage extends Component {
         )
     }
     componentDidMount() {
-        // this.RickAndMortyDB.getTotalCharacterCount()
-        // .then((res) => {
-        //     this.setState({
-        //         totalCharacters: res
-        //     })
-        // })
+        if(this.props.params) {
+            this.setState({
+                itemId: this.props.params.id
+            })
+            console.log(this.props.params)
+        }
         this.updateCharacter()
  
 
@@ -59,12 +65,9 @@ class CharacterPage extends Component {
         if(prevState.currentPage !== this.state.currentPage) {
         this.updateCharacter()
         }
-
-        
     }
    
     onItemSelected(id) {
-
         this.setState({
             itemId: id
         })
@@ -74,8 +77,7 @@ class CharacterPage extends Component {
     
     render() { 
         return (
-            <Container>
-                {/* <Header/> */}
+            <Container >
                 <Row>
                     <Col lg='8'>
                         <ItemTable 
@@ -118,14 +120,12 @@ class CharacterPage extends Component {
                                     totalCharacters={this.state.totalCharacters}
                                     onItemSelected={(id) => this.onItemSelected(id)}/>
                             }
-                            
                         </Row>
                     </Col>
                 </Row>
-
             </Container>
         );
     }
 }
  
-export default CharacterPage;
+export default withParams(CharacterPage);
