@@ -8,6 +8,9 @@ import Skeleton from 'react-loading-skeleton';
 
 import NotFoundImg from '../img/no-image.jpg'
 import { Container } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { removeRedundantPath } from '../helpers/helpers';
+
 
 function usePreviousValue(value) {
     const ref = useRef();
@@ -75,8 +78,18 @@ function SelectedItem({itemId, getData}) {
                     <ListGroup.Item>Species: {item.species}</ListGroup.Item>
                     {item.type && <ListGroup.Item>Type: {item.type}</ListGroup.Item>}
                     <ListGroup.Item>Status: {item.status}</ListGroup.Item>
-                    <ListGroup.Item action onClick={() => this.props.onLocationClicked(item.origin.url)}>Origin: {item.origin.name}</ListGroup.Item>
-                    <ListGroup.Item>Location: {item.location.name}</ListGroup.Item>
+                    {/* <ListGroup.Item action onClick={() => this.props.onLocationClicked(item.origin.url)}>Origin: {item.origin.name}</ListGroup.Item> */}
+                    <ListGroup.Item action>
+                        <Link to={`${removeRedundantPath(item.origin.url)}`}>
+                            Origins: {item.origin.name}
+
+                        </Link>
+                    </ListGroup.Item>
+                    <ListGroup.Item action>
+                        <Link to={`${removeRedundantPath(item.location.url)}`}>
+                            Location: {item.location.name}
+                        </Link>
+                        </ListGroup.Item>
                 </ListGroup>
             </Card.Body>
         </Card>
@@ -87,7 +100,6 @@ function SelectedItem({itemId, getData}) {
     );
 }
 export default SelectedItem;
-
 // export default SelectedItem;
 
 // class SelectedItem extends Component {

@@ -101,6 +101,7 @@ class LocationPage extends Component {
                         <SelectedLocation
                             itemId = {this.state.itemId}
                             getData = {this.RickAndMortyDB.getLocation}
+                            getCharName={this.RickAndMortyDB.getName}
                         />
                         <Row style={{marginTop: '50px'}}>
                             <Col sm='9'>

@@ -20,7 +20,7 @@ function RandomCard({getChar, onItemSelected, itemCount, itemPath}) {
 
     useEffect(() => {
         createCharList()
-        let timerId = setInterval(createCharList, 5000)
+        let timerId = setInterval(createCharList, 50000)
         return() => {
             clearInterval(timerId)
         }

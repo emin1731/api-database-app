@@ -1,5 +1,5 @@
 // Rick and Morty API
-
+import { removeRedundantPath } from "../helpers/helpers"
 
 class RickAndMortyDB {
     constructor() {
@@ -26,24 +26,47 @@ class RickAndMortyDB {
         let character = await this.getResource(`character/${id}`)
         return this._transformCharacter(character, id)
     }
+    getName = async (arr) => {
+        // let character = await this.getResource(`${arr}`)
+        return arr.map(async item => {
+            let char = await this.getResource(`${removeRedundantPath(item)}`)
+            return this._transformResident(char)
+        })
+        // let name = {
+        //     name: character.name,
+        //     url: arr
+        // }
+        // return this._transformResident(character, arr)
+    }
     getAllLocations = async (page) => {
         let result = await this.getResource(`location?page=${page}`)
         result = result.results
+        
         return result.map(this._transformLocation)
 
     }
-    getLocation = async (ref) => {
-        // if(type === "url") {
-            // const url = ref.replace("https://rickandmortyapi.com/api/", "")
-            // const location = await this.getResource(url)
-            // return this._transformLocation(location)
-        // }
-        // if(type === "id") {
-            let location = await this.getResource(`location/${ref}`)
-            // location = location.results
-            console.log("LOCATION", location)
-            return this._transformLocation(location, ref)
-        // }
+    getLocation = async (id) => {
+            let location = await this.getResource(`location/${id}`)
+
+            // Get Array of objects with resident name and url
+            const residents = await Promise.all(
+                location.residents.map((url) => 
+                    fetch(url)
+                    .then((r) => r.json())
+                    .then((r) =>
+                        this._transformResident(r)
+                    )
+                    )
+            );
+            console.log("LOCATION", residents)
+            return this._transformLocation(location, id, residents)
+    }
+
+    _transformResident(item, path) {
+        return {
+            name: item.name,
+            url: item.url
+        }
     }
     _transformCharacter(char, id) {
         return {
@@ -61,13 +84,13 @@ class RickAndMortyDB {
             created: char.created,
         }
     }
-    _transformLocation(loc, id) {
+    _transformLocation(loc, id, residents) {
         return {
             id: loc.id,
             name: loc.name,
             type: loc.type,
             dimension: loc.dimension,
-            residents: loc.residents,
+            residents: residents,
             url: loc.url,
             created: loc.created,
         }
