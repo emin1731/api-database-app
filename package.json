@@ -1,5 +1,6 @@
 {
-  "name": "naruto-database-app",
+  "homepage": "http://emin1731.github.io/api-database-app",
+  "name": "api-database-app",
   "version": "0.1.0",
   "private": true,
   "proxy": "http://localhost:3000/",
@@ -19,6 +20,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -42,6 +45,7 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "gh-pages": "^6.0.0"
   }
 }
