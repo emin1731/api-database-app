@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/api-database-app/static/css/main.d1a44d06.css",
-    "main.js": "/api-database-app/static/js/main.dcf70c8b.js",
+    "main.js": "/api-database-app/static/js/main.12ca2d65.js",
     "index.html": "/api-database-app/index.html",
     "main.d1a44d06.css.map": "/api-database-app/static/css/main.d1a44d06.css.map",
-    "main.dcf70c8b.js.map": "/api-database-app/static/js/main.dcf70c8b.js.map"
+    "main.12ca2d65.js.map": "/api-database-app/static/js/main.12ca2d65.js.map"
   },
   "entrypoints": [
     "static/css/main.d1a44d06.css",
-    "static/js/main.dcf70c8b.js"
+    "static/js/main.12ca2d65.js"
   ]
 }
