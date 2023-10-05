@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/api-database-app/static/css/main.d1a44d06.css",
+    "main.js": "/api-database-app/static/js/main.dcf70c8b.js",
+    "index.html": "/api-database-app/index.html",
+    "main.d1a44d06.css.map": "/api-database-app/static/css/main.d1a44d06.css.map",
+    "main.dcf70c8b.js.map": "/api-database-app/static/js/main.dcf70c8b.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d1a44d06.css",
+    "static/js/main.dcf70c8b.js"
+  ]
+}
