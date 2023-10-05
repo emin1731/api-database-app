@@ -5,12 +5,12 @@ import {Container, Row, Col} from 'react-bootstrap'
 import Header from './components/Header';
 import CharacterPage from './routes/characterPage';
 
-import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import {createBrowserRouter, createHashRouter, RouterProvider} from "react-router-dom";
 import Root from './routes/Root';
 import LocationPage from './routes/locationPage';
 
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: "/",
     element: <Root />,
